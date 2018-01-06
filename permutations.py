@@ -10,6 +10,23 @@ def permutation(l):
   
   return _permutation([], l)
 
+def permute(l):
+  if len(l) == 0:
+    yield l
+  else:
+    for i in range(len(l)):
+      l[0], l[i] = l[i], l[0]
+      for item in permute(l[1:]):
+        yield [l[0]] + item
+
+def combine(l):
+  if len(l) == 0:
+    yield l
+  else:
+    yield from combine(l[1:])
+    for item in combine(l[1:]):
+      yield [l[0]] + item
+
 def combination(l):
   def _combination(sofar, remaining):
     if len(remaining) == 0:
@@ -20,9 +37,9 @@ def combination(l):
   return _combination([], l)
 
 if __name__ == "__main__":
-  for l in permutation([1, 2, 3]):
+  for l in permute([1, 2, 3]):
     print(l)
 
   print("\n")
-  for l in combination([1, 2, 3]):
+  for l in combine([1, 2, 3]):
     print(l)
